@@ -22,7 +22,7 @@ public class BowIK : MonoBehaviour
     {
         Link tmp;
         tmp.length = len;
-        tmp.angleOffset = offset_angle;
+        tmp.angleOffset = offset_angle * Mathf.Deg2Rad;
         tmp.c = c; //delete
 
         links.Add(tmp);
@@ -35,7 +35,7 @@ public class BowIK : MonoBehaviour
     
 
 
-    public Vector2 BowIKConcatVec2(float angle)
+    private Vector2 ConcatVec2(float angle)
     {
         Vector2 startToEnd = new Vector2(0, 0);
         Vector2 lastStartToEnd = new Vector2(0, 0);//delete
@@ -72,12 +72,12 @@ public class BowIK : MonoBehaviour
 
     public float GetFirstAngle()
     {    
-        return firstAngle;
+        return firstAngle - links[0].angleOffset * Mathf.Rad2Deg;
     }
 
     public float GetAngleBetweenLinks()
     {      
-        return angleBetweenLinks;
+        return angleBetweenLinks * Mathf.Rad2Deg;
     }
 
     private  bool BinarySearchforAngle(float targetDistance, float minAngle, float maxAngle, float threshold, int i, float angle)
@@ -87,13 +87,13 @@ public class BowIK : MonoBehaviour
             return false;
         }
 
-        Vector2 startToEnd = BowIKConcatVec2(angle);
+        Vector2 startToEnd = ConcatVec2(angle);
         float error = startToEnd.magnitude - targetDistance;
 
         if (error > threshold * -0.5f && error < threshold * 0.5f)
         {
             angleBetweenLinks = angle;
-            firstAngle = Vector2.Angle(startToEnd.normalized,new Vector2(1f, 0f));
+            firstAngle = Vector2.Angle(startToEnd.normalized, Rotate2D(new Vector2(1f, 0f), links[0].angleOffset));
             return true;
         }
 

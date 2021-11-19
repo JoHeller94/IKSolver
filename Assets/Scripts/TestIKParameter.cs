@@ -38,18 +38,9 @@ public class TestIKParameter : MonoBehaviour
 
         d = new Vector2(P4.transform.position.x, P4.transform.position.y) - new Vector2(P1.transform.position.x, P1.transform.position.y);
 
-        float test = Vector2.Angle(P2.transform.position - P1.transform.position, Vector2.right);
-        Debug.Log("Offset " + test);
-
         offsetAngle_a = Vector3.SignedAngle(new Vector3(a.x, 0, a.z), a, P1.transform.forward);
         offsetAngle_b = Vector3.SignedAngle(a, b, P1.transform.forward);
         offsetAngle_c = Vector3.SignedAngle(b, c, P1.transform.forward);
-
-
-        Debug.Log("Angle A = " + offsetAngle_a);
-        Debug.Log("Angle B = " + offsetAngle_b);
-        Debug.Log("Angle C = " + offsetAngle_c);
-
 
 
         ik.AddLink(a.magnitude, offsetAngle_a, Color.cyan);
@@ -80,7 +71,6 @@ public class TestIKParameter : MonoBehaviour
 
             float gamma = Vector2.SignedAngle(d1, d2);
 
-            //Debug.Log("Gamma: " + gamma  + " Alpha: " + -alpha + " Combined: " + (-alpha-gamma));
 
 
             P1.transform.localRotation = Quaternion.Euler(P1.transform.localRotation.x, P1.transform.localRotation.y, alpha - gamma);

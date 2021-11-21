@@ -76,7 +76,7 @@ public class TestIKParameter : MonoBehaviour
             P1.transform.localRotation = Quaternion.Euler(P1.transform.localRotation.x, P1.transform.localRotation.y, alpha - gamma);
             P2.transform.localRotation = Quaternion.Euler(P2.transform.localRotation.x, P2.transform.localRotation.y, -beta);
             P3.transform.localRotation = Quaternion.Euler(P3.transform.localRotation.x, P3.transform.localRotation.y, -beta);
-            P4.transform.localRotation = Quaternion.Euler(P4.transform.localRotation.x, P4.transform.localRotation.y, (-P4.transform.parent.rotation.ToEuler().z * Mathf.Rad2Deg) - inputAngle);
+            P4.transform.localRotation = Quaternion.Euler(P4.transform.localRotation.x, P4.transform.localRotation.y, (-P3.transform.rotation.eulerAngles.z - 90) - inputAngle); 
 
         }
         else
@@ -91,7 +91,9 @@ public class TestIKParameter : MonoBehaviour
 
     void swingArm()
     {
-        float planarAngle = Vector3.SignedAngle(new Vector3(target.transform.position.x, 0.0f, target.transform.position.z) - P0.transform.position, P0.transform.parent.right, P0.transform.parent.up);
+        float planarAngle = Vector3.SignedAngle(new Vector3(target.transform.position.x, 0.0f, target.transform.position.z) - P0.transform.position, P0.transform.right, P0.transform.up);
         P0.transform.localRotation = Quaternion.Euler(0, -planarAngle, 0);
     }
+
+
 }
